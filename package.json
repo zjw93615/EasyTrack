@@ -1,0 +1,25 @@
+{
+  "name": "easy-track",
+  "version": "1.0.0",
+  "description": "EasyTrack help you track the performance of web pages in js",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "log",
+    "tracker",
+    "track",
+    "analytics"
+  ],
+  "author": "Jiawei Zheng",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "easy-log-report": "^1.0.3",
+    "web-vitals": "^3.3.1"
+  }
+}
