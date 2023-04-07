@@ -19,19 +19,33 @@ var EasyTrack = /** @class */ (function () {
     // Constructor that initializes the EasyLogReport and configuration options
     function EasyTrack(props) {
         this.easyLogReport = new EasyLogReport(props);
-        this.initConfig = __assign({}, (props || {}));
+        this.initConfig = __assign({ track: ['jsError', 'performance', 'xhr'] }, (props || {}));
     }
     // Method that initializes the tracking, injects error handling and performance tracking, and runs a callback if provided
     EasyTrack.prototype.init = function (cb) {
+        var _a, _b, _c;
+        // Prevent multiple initialization
         if (window.easyTrack) {
             console.error('EasyTrack - init function has call twice');
             return;
         }
+        // Set the EasyTrack instance as a global variable
         window.easyTrack = this;
+        // Initialize the EasyLogReport instance
         this.easyLogReport.init();
-        this.injectJsError();
-        this.performance();
-        this.injectXHR();
+        // Inject error handling for JavaScript errors and Promise rejections if 'jsError' is in the tracked items
+        if ((_a = this.initConfig.track) === null || _a === void 0 ? void 0 : _a.includes('jsError')) {
+            this.injectJsError();
+        }
+        // Track web performance metrics if 'performance' is in the tracked items
+        if ((_b = this.initConfig.track) === null || _b === void 0 ? void 0 : _b.includes('performance')) {
+            this.performance();
+        }
+        // Inject error handling for XHR requests if 'xhr' is in the tracked items
+        if ((_c = this.initConfig.track) === null || _c === void 0 ? void 0 : _c.includes('xhr')) {
+            this.injectXHR();
+        }
+        // Run the callback function if provided
         cb && cb();
     };
     // Method that injects error handling for JavaScript errors and Promise rejections
