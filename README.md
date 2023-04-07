@@ -1,19 +1,22 @@
-# EasyLogReport
-[![npm](https://img.shields.io/npm/v/easy-log-report.svg)](https://www.npmjs.com/package/easy-log-report)
-[![CI](https://github.com/zjw93615/EasyLog/actions/workflows/npmjs.yml/badge.svg?event=release)](https://github.com/zjw93615/EasyLog/actions/workflows/npmjs.yml)
-[![Coverage Status](https://coveralls.io/repos/github/zjw93615/EasyLog/badge.svg?branch=master)](https://coveralls.io/github/zjw93615/EasyLog?branch=master)
+# EasyTrack
+
+[comment]: <> ([![npm]&#40;https://img.shields.io/npm/v/easy-log-report.svg&#41;]&#40;https://www.npmjs.com/package/easy-log-report&#41;)
+
+[comment]: <> ([![CI]&#40;https://github.com/zjw93615/EasyLog/actions/workflows/npmjs.yml/badge.svg?event=release&#41;]&#40;https://github.com/zjw93615/EasyLog/actions/workflows/npmjs.yml&#41;)
+
+[comment]: <> ([![Coverage Status]&#40;https://coveralls.io/repos/github/zjw93615/EasyLog/badge.svg?branch=master&#41;]&#40;https://coveralls.io/github/zjw93615/EasyLog?branch=master&#41;)
 
 
-EasyLogReport is a Typescript library for dealing with log reporting.
+EasyTrack is a Typescript library for dealing with js error, xhr error and performance tracking.
 
 ## Installation
 
 ```sh
-yarn add easy-log-report
+yarn add easy-track
 ```
 or
 ```sh
-npm install easy-log-report --save
+npm install easy-track
 ```
 
 ## Usage
@@ -21,11 +24,11 @@ npm install easy-log-report --save
 Create your 
 Report log by sendBeacon function
 ```javascript
-import EasyLogReport from 'easy-log-report'
-import { SEND_TYPE } from 'easy-log/build/interface'
+import EasyTrack from 'easy-track'
 
-const easyLogReport = new EasyLogReport({
+const easyTrack = new EasyTrack({
     acceptEventType: ['onLaunch', 'onLoad', 'onUnload', 'onShow', 'request', 'onError', 'click'],
+    track: ['jsError', 'performance', 'xhr'],
     sendInterval: 1000 * 30,
     sendQueueSize: 30,
     sendUrl: 'http://localhost:8080/api/log/beacon/',
@@ -53,15 +56,17 @@ const easyLogReport = new EasyLogReport({
         }
     },
 })
+easyTrack.init()
 
-export default easyLogReport
+export default easyTrack
 ```
 OR report log by your custom sendFn
 ```javascript
-import EasyLogReport from 'easy-log-report'
+import EasyTrack from 'easy-track'
 
-const easyLogReport = new EasyLogReport({
+const easyTrack = new EasyTrack({
     acceptEventType: ['onLaunch', 'onLoad', 'onUnload', 'onShow', 'request', 'onError', 'click'],
+    track: ['jsError', 'performance', 'xhr'],
     sendInterval: 1000 * 30,
     sendQueueSize: 30,
     sendFn: e => {
@@ -92,28 +97,19 @@ const easyLogReport = new EasyLogReport({
     },
 })
 
-easyLogReport.init(() => {
+easyTrack.init(() => {
     console.log('EasyLogReport init!')
 })
 
-export default easyLogReport
+export default easyTrack
 ```
 
-### Record Log
-```javascript
-easyLogReport.log({
-    eventType: 'onLoad',
-    elemId: 'App',
-    extraParams: {
-        // other extra params
-        type: 'onLoad'
-    }
-})
-```
+
 ## Config Props
 |  Property   | Description  | Type | Default |
 |  ----  | ----  | ---- | ---- |
 | acceptEventType  | log event types that are allowed to be reported | string[] | ['onLaunch', 'onLoad', 'onUnload', 'onShow', 'request', 'onError', 'click'] |
+| track  | event types that need to be tracked | string[] | ['jsError', 'performance', 'xhr'] |
 | sendInterval  | send function trigger interval(millisecond) | number | 1000 * 30 |
 | sendQueueSize  | the maximum number of logs in queue | number | 50 |
 | singleMode | If it`s singleMode, report log immediately | boolean | false |
