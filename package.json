@@ -7,6 +7,11 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zjw93615/EasyTrack"
+  },
+  "bugs": "https://github.com/zjw93615/EasyTrack/issues",
   "keywords": [
     "log",
     "tracker",
